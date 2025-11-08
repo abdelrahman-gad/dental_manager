@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
+use App\Models\User;
+use App\Models\Setting;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -12,14 +12,35 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run():void
     {
-        // \App\Models\User::factory(10)->create();
+        Setting::factory()->create();
 
-        \App\Models\User::create([
-            'name' => 'Test User',
-            'email' => 'test@example.com', 
-            'password' => bcrypt('password')
-        ]);
+        $this->seedUsers();
+        $this->call(
+            [
+                UnitTypeSeeder::class,
+                ToothTypeSeeder::class,
+                ExpenseTypeSeeder::class,
+                ColorSeeder::class,
+            ]
+        );
+    }
+
+    /**
+     * Seed the users database.
+     *
+     * @return void
+     */
+    private function seedUsers():void
+    {
+        $user = User::where('email','test@example.com');
+        if(!isset($user)){
+            User::firstOrCreate([
+                'name' => 'Test User',
+                'email' => 'test@example.com',
+                'password' => bcrypt('password')
+            ]);
+        }
     }
 }

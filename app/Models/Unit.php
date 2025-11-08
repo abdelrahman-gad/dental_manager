@@ -16,7 +16,7 @@ class Unit extends Model
         return $this->belongsTo(UnitType::class);
     }
 
-    public function order()
+    public function order():BelongsTo
     {
         return $this->belongsTo(Order::class);
     }

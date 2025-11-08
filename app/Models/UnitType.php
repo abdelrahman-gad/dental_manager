@@ -9,6 +9,9 @@ class UnitType extends Model
 {
     use HasFactory;
     protected  $guarded = [];
-
+    public const DIRECTION_LEFT = 'LEFT';
+    public const DIRECTION_RIGHT = 'RIGHT';
+    public const LEVEL_UPPER = 'UPPER';
+    public const LEVEL_LOWER = 'LOWER';
 
 }

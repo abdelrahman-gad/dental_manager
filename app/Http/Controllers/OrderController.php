@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateOrderRequest;
-use App\Http\Requests\UpdateOrderRequest;
+use App\Http\Requests\Order\CreateOrderRequest;
+use App\Http\Requests\Order\UpdateOrderRequest;
 use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\ToothType;
@@ -18,7 +18,7 @@ class OrderController extends Controller
 
     public function index( Request $request )
     {
-        // fitler by
+        // filter by
         // doctor_id, color_id, tooth_type_id, PAID or UNPAID, DELIVERED or UDELIVERD
         // search by patient_name
         // datepicker
