@@ -10,7 +10,7 @@ class DoctorController extends Controller
 
     public function index()
     {
-        return  response()->json( ['data'=>Doctor::paginate(1),'message'=>' '], 200);
+        return response()->json( ['data'=>Doctor::paginate(1),'message'=>' '], 200);
     }
 
     public function store(CreateDoctorRequest $request)
