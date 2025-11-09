@@ -56,10 +56,17 @@ class ExpenseTypeSeeder extends Seeder
         ];
 
         foreach ($expenseTypes as $type) {
-            ExpenseType::updateOrCreate(
-                ['name' => $type['name']], // Avoid duplicates
-                $type
-            );
+
+           $expenseTypeEntity = ExpenseType::where(
+                ['name' => $type['name']]
+            )->first();
+
+           if(!isset($expenseTypeEntity)) {
+               ExpenseType::create([
+                   'name' => $type['name'],
+                   'description' => $type['description'],
+               ]);
+           }
         }
     }
 }

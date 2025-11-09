@@ -14,33 +14,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run():void
     {
-        Setting::factory()->create();
 
-        $this->seedUsers();
         $this->call(
             [
+                SettingSeeder::class,
+                UserSeeder::class,
                 UnitTypeSeeder::class,
                 ToothTypeSeeder::class,
                 ExpenseTypeSeeder::class,
                 ColorSeeder::class,
+                DoctorSeeder::class,
+                AssetSeeder::class,
+                ExpenseSeeder::class,
+                OrderSeeder::class,
+                InvoiceSeeder::class,
+                TransactionSeeder::class,
             ]
         );
     }
 
-    /**
-     * Seed the users database.
-     *
-     * @return void
-     */
-    private function seedUsers():void
-    {
-        $user = User::where('email','test@example.com');
-        if(!isset($user)){
-            User::firstOrCreate([
-                'name' => 'Test User',
-                'email' => 'test@example.com',
-                'password' => bcrypt('password')
-            ]);
-        }
-    }
 }
