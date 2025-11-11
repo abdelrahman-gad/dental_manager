@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\ToothType;
 use App\Models\Transaction;
 use App\Models\Unit;
+use App\Models\UnitType;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -97,21 +98,22 @@ class OrderController extends Controller
 
         // 2- create unit
 
-        foreach($request->unit_types_ids as $id ){
+        foreach($request->unit_types_orders as $unitTypeOrder){
+
+            $unitType = UnitType::where('order',$unitTypeOrder)->first();
+
             Unit::create([
-                'unit_type_id'=>$id,
+                'unit_type_id'=>$unitType->id,
                 'order_id' => $order->id
             ]);
         }
-
-        // 3- creat unpaid invoice
 
         $costPerUnit =  ToothType::where('id',$request['tooth_type_id'])
                                    ->select('cost')
                                    ->first()
                                    ->cost;
 
-        $allUnitsCost = $costPerUnit * count($request->unit_types_ids);
+        $allUnitsCost = $costPerUnit * count($request->unit_types_orders);
 
         $invoiceData = [
             'order_id' =>$order->id,
@@ -139,6 +141,7 @@ class OrderController extends Controller
           }
 
         $invoice = Invoice::create($invoiceData);
+
         return response()->json(['message'=>'order created successfully','data'=>[]], Response::HTTP_CREATED );
     }
 
@@ -161,21 +164,24 @@ class OrderController extends Controller
         $order  = Order::where(['id'=>$request->id])->with(['units','invoice.transaction','toothType'])->first();
         $order->units()->delete();
         $order->invoice()->delete();
-        unset($data['unit_types_ids']);
+        unset($data['unit_types_orders']);
         unset($data['discount_value']);
         unset($data['discount_type']);
 
         $order->update($data);
         // 2- create unit
-        foreach($request->unit_types_ids as $id ){
+        foreach($request->unit_types_orders as $unitTypeOrder ){
+
+            $unitType = UnitType::where('order',$unitTypeOrder)->first();
+
             Unit::create([
-                'unit_type_id'=>$id,
+                'unit_type_id'=> $unitType->id,
                 'order_id' => $order->id
             ]);
+
         }
 
         // 3- creat unpaid invoice
-
 
         $costPerUnit =0;
         if(isset($request['tooth_type_id'])){
@@ -189,10 +195,10 @@ class OrderController extends Controller
          $costPerUnit = $order->toothType->cost;
         }
 
-        $allUnitsCost = $costPerUnit * count($request->unit_types_ids);
+        $allUnitsCost = $costPerUnit * count($request->unit_types_orders);
 
         $invoiceData = [
-            'order_id' =>$order->id,
+            'order_id' => $order->id,
             'payment_status' => 'UNPAID',
             'subtotal_amount' => $allUnitsCost,
             'total_amount' =>  $allUnitsCost ,

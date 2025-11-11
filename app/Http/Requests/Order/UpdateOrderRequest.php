@@ -30,8 +30,8 @@ class UpdateOrderRequest extends FormRequest
             'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
 
             // Units (array of IDs)
-            'unit_types_ids' => 'sometimes|required|array|min:1',
-            'unit_types_ids.*' => 'exists:unit_types,id',
+            'unit_types_orders' => 'sometimes|required|array|min:1',
+            'unit_types_ordes.*' => 'exists:unit_types,order',
 
             // Discount info (optional)
             'discount_type' => 'nullable|in:PERCENTAGE,FIXED',

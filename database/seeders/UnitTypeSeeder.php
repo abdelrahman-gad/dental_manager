@@ -15,9 +15,18 @@ class UnitTypeSeeder extends Seeder
     {
       $directions = [UnitType::DIRECTION_LEFT, UnitType::DIRECTION_RIGHT];
       $levels = [UnitType::LEVEL_UPPER, UnitType::LEVEL_LOWER];
-      foreach ($directions as $direction) {
-          foreach ($levels as $level) {
-              for($order=1; $order<=8; $order++){
+
+      $quarter1 = [
+          UnitType::LEVEL_UPPER . '_' . UnitType::DIRECTION_LEFT => 1,
+          UnitType::LEVEL_UPPER . '_' . UnitType::DIRECTION_RIGHT => 2,
+          UnitType::LEVEL_LOWER . '_' . UnitType::DIRECTION_RIGHT => 3,
+          UnitType::LEVEL_LOWER . '_' . UnitType::DIRECTION_LEFT => 4,
+      ];
+
+      foreach ($levels as $level) {
+          foreach ($directions as $direction) {
+              for($i=1; $i<=8; $i++){
+                  $order = $quarter1[$level . '_' . $direction].''.$i;
                   $this->createUnitType($direction, $level, $order);
               }
           }
