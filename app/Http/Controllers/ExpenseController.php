@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateExpenseRequest;
-use App\Http\Requests\CreateExpenseTypeRequest;
-use App\Http\Requests\UpdateExpenseRequest;
+use App\Http\Requests\Expense\CreateExpenseRequest;
+use App\Http\Requests\Expense\UpdateExpenseRequest;
 use App\Models\Expense;
 use App\Models\Transaction;
 use Illuminate\Http\Request;

@@ -8,7 +8,6 @@ use App\Models\Doctor;
 
 class DoctorController extends Controller
 {
-
     public function index()
     {
         return response()->json( ['data' => Doctor::paginate(10),'message'=>''], 200);
@@ -17,13 +16,14 @@ class DoctorController extends Controller
     public function store(CreateDoctorRequest $request)
     {
         Doctor::create($request->all());
-        return response()->json(['data'=> [],'message'=>'Created Successfully'],201);
+        $doctor = Doctor::latest()->first();
+        return response()->json(['data'=> $doctor ,'message'=>'Created Successfully'],201);
     }
 
     public function update(UpdateDoctorRequest $request, Doctor $doctor)
     {
         $doctor->update($request->all());
-        return response()->json( [ 'data'=> [], 'message' =>'Updated Successfully'],200);
+        return response()->json( [ 'data'=> $doctor, 'message' =>'Updated Successfully'],200);
     }
 
     public function destroy(Doctor $doctor)

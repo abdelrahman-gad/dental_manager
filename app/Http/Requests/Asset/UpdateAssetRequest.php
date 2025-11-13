@@ -28,7 +28,7 @@ class UpdateAssetRequest extends FormRequest
                 'max:255',
                 Rule::unique('assets', 'name')->ignore($this->asset->id),
             ],
-            'cost' => 'sometimes|required|numeric|min:0',
+            'cost' => 'sometimes|required|numeric|min:1',
             'notes' => 'sometimes|required|string|max:255',
         ];
     }
