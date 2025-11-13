@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateAssetRequest;
+use App\Http\Requests\Asset\CreateAssetRequest;
+use App\Http\Requests\Asset\UpdateAssetRequest;
 use App\Models\Asset;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,7 @@ class AssetController extends Controller
         return response()->json(['data'=> $asset,'message'=>'Created Successfully'],201);
     }
 
-    public function update(CreateAssetRequest $request, Asset $asset)
+    public function update(UpdateAssetRequest $request, Asset $asset)
     {
      $asset->update($request->all());
      return response()->json( [ 'data'=> $asset, 'message' =>'Updated Successfully'],200);
