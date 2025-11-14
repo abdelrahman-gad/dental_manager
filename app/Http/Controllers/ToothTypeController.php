@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateToothTypeRequest;
+use App\Http\Requests\ToothType\CreateToothTypeRequest;
+use App\Http\Requests\ToothType\UpdateToothTypeRequest;
 use App\Models\ToothType;
 use Illuminate\Http\Request;
 
@@ -10,19 +11,31 @@ class ToothTypeController extends Controller
 {
     public function index()
     {
-        return  response()->json( ['data'=>ToothType::all(),'message'=>' '], 200);
+        return response()->json( [ 
+            'data' => ToothType::all(),
+            'message'=>''
+        ], 200);
     }
 
     public function store(CreateToothTypeRequest $request)
     {
         ToothType::create($request->all());
-        return response()->json(['data'=> [],'message'=>'Created Successfully'],201);
+        $toothType = ToothType::latest()->first();
+
+        return response()->json([
+            'data'=> $toothType,
+            'message'=>'Created Successfully'
+        ],201);
     }
 
-    public function update(CreateToothTypeRequest $request, ToothType $toothType)
+    public function update(UpdateToothTypeRequest $request, ToothType $toothType)
     {
         $toothType->update($request->all());
-        return response()->json( [ 'data'=> [], 'message' =>'Updated Successfully'],200);
+        
+        return response()->json([ 
+            'data'=> $toothType, 
+            'message' =>'Updated Successfully'
+        ],200);
     }
 
     public function destroy(ToothType $toothType)

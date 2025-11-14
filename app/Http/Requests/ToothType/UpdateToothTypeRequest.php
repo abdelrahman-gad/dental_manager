@@ -3,8 +3,9 @@
 namespace App\Http\Requests\ExpenseType;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class CreateExpenseTypeRequest extends FormRequest
+class UpdateExpenseTypeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,20 +20,14 @@ class CreateExpenseTypeRequest extends FormRequest
      */
     public function rules(): array
     {
-        // try common route parameter names used for route-model binding
-        $expenseTypeId = $this->route('expense_type') ?? $this->route('expenseType');
-
-        if ($expenseTypeId instanceof \Illuminate\Database\Eloquent\Model) {
-            $expenseTypeId = $expenseTypeId->getKey();
-        }
-
         return [
             'name' => [
-                'required',
-                'string',
+                'required', 
+                'string', 
                 'max:255',
-                \Illuminate\Validation\Rule::unique('expense_types', 'name')->ignore($expenseTypeId),
-            ],
+                Rule::unique('expense_types', 'name')->ignore($this->route('expense_type')),
+                
+                ],
             'description' => ['nullable', 'string', 'max:1000'],
         ];
     }
