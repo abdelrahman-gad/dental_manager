@@ -170,16 +170,18 @@ class OrderController extends Controller
 
         $order->update($data);
         // 2- create unit
-        foreach($request->unit_types_orders as $unitTypeOrder ){
+            foreach($request->unit_types_orders as $unitTypeOrder ){
 
-            $unitType = UnitType::where('order',$unitTypeOrder)->first();
+                $unitType = UnitType::where('order',$unitTypeOrder)->first();
 
-            Unit::create([
-                'unit_type_id'=> $unitType->id,
-                'order_id' => $order->id
-            ]);
+                Unit::create([
+                    'unit_type_id'=> $unitType->id,
+                    'order_id' => $order->id
+                ]);
 
-        }
+              }
+        
+       
 
         // 3- creat unpaid invoice
 
