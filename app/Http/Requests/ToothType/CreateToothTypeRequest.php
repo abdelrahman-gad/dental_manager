@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\ExpenseType;
+namespace App\Http\Requests\ToothType;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateExpenseTypeRequest extends FormRequest
+class CreateToothTypeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

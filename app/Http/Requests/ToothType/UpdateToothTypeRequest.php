@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\ExpenseType;
+namespace App\Http\Requests\ToothType;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateExpenseTypeRequest extends FormRequest
+class UpdateToothTypeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

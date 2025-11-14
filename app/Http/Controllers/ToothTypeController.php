@@ -20,6 +20,7 @@ class ToothTypeController extends Controller
     public function store(CreateToothTypeRequest $request)
     {
         ToothType::create($request->all());
+        
         $toothType = ToothType::latest()->first();
 
         return response()->json([
@@ -31,7 +32,7 @@ class ToothTypeController extends Controller
     public function update(UpdateToothTypeRequest $request, ToothType $toothType)
     {
         $toothType->update($request->all());
-        
+
         return response()->json([ 
             'data'=> $toothType, 
             'message' =>'Updated Successfully'
@@ -40,7 +41,16 @@ class ToothTypeController extends Controller
 
     public function destroy(ToothType $toothType)
     {
+        if($this->toothTypeIsUsedInOrders($toothType->id)) {
+            return response()->json( ['data'=> [],'message'=>'Cannot delete this tooth type because it is used in one or more orders.'],422);
+        }
         $toothType->delete();
         return response()->json( ['data'=> [],'message'=>'Deleted Successfully'],200);
     }
+
+    private function toothTypeIsUsedInOrders($toothTypeId)
+    {
+        return \App\Models\Order::where('tooth_type_id', $toothTypeId)->exists();
+    }
+
 }

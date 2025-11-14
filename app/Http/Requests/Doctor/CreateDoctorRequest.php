@@ -11,7 +11,6 @@ class CreateDoctorRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        // Allow access; you can later restrict it to admins if needed.
         return true;
     }
 
