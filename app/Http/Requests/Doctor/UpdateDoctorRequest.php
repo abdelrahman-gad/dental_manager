@@ -44,7 +44,7 @@ class UpdateDoctorRequest extends FormRequest
                 'required',
                 'string',
                 'max:20',
-                Rule::unique('doctors', 'phone')->ignore($this->doctor),
+                Rule::unique('doctors', 'whatsapp')->ignore($this->doctor),
             ],
             'address' => 'nullable|string|max:500',
         ];

@@ -37,13 +37,10 @@ class ExpenseController extends Controller
             'expense_id' => $expense->id
         ]);
         return response()->json([
-            'data' => [],
+            'data' => $expense,
             'message' => 'Created successfully'
         ]);
     }
-
-
-
     /**
      * Update the specified resource in storage.
      *
@@ -64,7 +61,7 @@ class ExpenseController extends Controller
         }
 
         return response()->json([
-            'data'=> [],
+            'data'=> $expense,
             'message' => 'updated successfully'
         ],Response::HTTP_OK);
     }
@@ -90,6 +87,7 @@ class ExpenseController extends Controller
        Expense::withTrashed()->where(['id'=>$id])->update(['deleted_at'=>null]);
        $expense = Expense::where(['id'=>$id])->with(['transaction'])->first();
        $expense->transaction()->restore();
+       
        return response()->json([
             'data'=> [],
             'message' => 'restored successfully'

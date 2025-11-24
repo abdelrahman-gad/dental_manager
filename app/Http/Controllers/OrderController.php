@@ -180,8 +180,6 @@ class OrderController extends Controller
                 ]);
 
               }
-        
-       
 
         // 3- creat unpaid invoice
 
