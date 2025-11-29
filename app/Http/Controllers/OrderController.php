@@ -146,7 +146,7 @@ class OrderController extends Controller
     }
 
 
-       /**
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -213,7 +213,7 @@ class OrderController extends Controller
               $invoiceData['discount_amount'] = ($request->discount_value /100)  * ($allUnitsCost);
               $invoiceData['total_amount'] =    $allUnitsCost  -  (($request->discount_value / 100)  * $allUnitsCost);
               $invoiceData['remaining_amount'] =    $allUnitsCost  -  (($request->discount_value / 100)  * $allUnitsCost);
-            }  else{
+            }else{
                 $invoiceData['discount_type'] = 'FIXED';
                 $invoiceData['discount_amount'] = $request->discount_value;
                 $invoiceData['discount_value'] = $request->discount_value;
@@ -224,7 +224,7 @@ class OrderController extends Controller
 
         $invoice = Invoice::create($invoiceData);
 
-        return response()->json(['message'=>'order updated successfully','data'=>[]], Response::HTTP_CREATED );
+        return response()->json(['message'=>'order updated successfully', 'data' => $invoice], Response::HTTP_CREATED );
     }
 
 
